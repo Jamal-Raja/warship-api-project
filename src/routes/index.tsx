@@ -1,6 +1,7 @@
 /** @format */
 
 import { cn } from "@/util/ClassCombine";
+import type { nationClass, shipClass, shipData } from "@/util/types";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 
@@ -27,7 +28,6 @@ function App() {
     try {
       // Try to load data from your local JSON file.
       const response = await fetch("../../testData.json");
-
       if (!response.ok) {
         throw new Error("Could not fetch resource");
       }
@@ -65,41 +65,6 @@ function App() {
     </div>
   );
 }
-// DATA TYPE FOR SHIP TYPE (E.G Destroyer, cruiser, battleship, airc-arrier)
-type shipClass =
-  | "Cruiser"
-  | "Destroyer"
-  | "Battleship"
-  | "AirCarrier"
-  | "Submarine";
-
-type nationClass =
-  | "netherlands"
-  | "usa"
-  | "commonwealth"
-  | "europe"
-  | "germany"
-  | "ussr"
-  | "italy"
-  | "pan_america"
-  | "japan"
-  | "uk"
-  | "pan_asia"
-  | "france"
-  | "spain";
-
-// DATA TYPE FOR SHIPS
-// This describes what each "ship" looks like in JSON data.
-interface shipData {
-  price_gold: number;
-  images: {
-    large: string;
-  };
-  nation: nationClass;
-  tier: number;
-  type: shipClass;
-  name: string;
-}
 
 // COLOUR MAPPING
 // This array links a nation's name to a background colour.
@@ -108,26 +73,26 @@ interface shipData {
 const colour = [
   {
     nation: "netherlands",
-    bg: "bg-gradient-to-r from-orange-200 to-orange-400",
+    bg: "bg-orange-200",
   },
-  { nation: "usa", bg: "bg-gradient-to-r from-blue-200 to-blue-400" },
+  { nation: "usa", bg: "bg-blue-200" },
   {
     nation: "commonwealth",
-    bg: "bg-gradient-to-r from-amber-100 to-yellow-300",
+    bg: "bg-amber-100 ",
   },
-  { nation: "europe", bg: "bg-gradient-to-r from-indigo-100 to-indigo-300" },
-  { nation: "germany", bg: "bg-gradient-to-r from-stone-200 to-yellow-300" },
-  { nation: "ussr", bg: "bg-gradient-to-r from-red-200 to-red-400" },
-  { nation: "italy", bg: "bg-gradient-to-r from-green-200 to-green-400" },
-  { nation: "pan_america", bg: "bg-gradient-to-r from-cyan-100 to-teal-300" },
-  { nation: "japan", bg: "bg-gradient-to-r from-neutral-100 to-rose-200" },
-  { nation: "uk", bg: "bg-gradient-to-r from-blue-100 to-blue-300" },
+  { nation: "europe", bg: "bg-indigo-100" },
+  { nation: "germany", bg: "bg-stone-200 " },
+  { nation: "ussr", bg: "bg-red-200" },
+  { nation: "italy", bg: "bg-green-200 " },
+  { nation: "pan_america", bg: "bg-cyan-200" },
+  { nation: "japan", bg: "bg-neutral-200" },
+  { nation: "uk", bg: "bg-blue-100" },
   {
     nation: "pan_asia",
-    bg: "bg-gradient-to-r from-emerald-100 to-emerald-300",
+    bg: "bg-emerald-300",
   },
-  { nation: "france", bg: "bg-gradient-to-r from-blue-100 to-rose-200" },
-  { nation: "spain", bg: "bg-gradient-to-r from-red-100 to-amber-200" },
+  { nation: "france", bg: "bg-blue-100" },
+  { nation: "spain", bg: "bg-red-100" },
 ];
 
 // SHIP CARD COMPONENT
@@ -135,31 +100,48 @@ const colour = [
 // It receives a single ship's data as a prop (`{ data }`).
 export function ShipCard({ data }: { data: shipData }) {
   return (
-    <div
+    <a
+      href={`/ship/${data.ship_id}`}
       className={cn(
-        "flex flex-col w-48 bg-blue-400 overflow-clip h-68 rounded-4xl p-2",
+        "flex flex-col w-84 bg-blue-400 overflow-clip h-min gap-1 rounded-xl hover:-translate-y-2 duration-200",
         colour.find((el) => el.nation === data.nation)?.bg
       )}>
       {/* Show the ship's image */}
-      <div className="rounded-4xl  relative w-full bg-cover bg-center aspect-video">
-        <div className={cn(`bg-[url(/map.png)] w-full h-full absolute`, GetClassIcon(data.type))} />
+      <div className="rounded-4xl relative w-full bg-cover bg-center aspect-video">
+        <div
+          className={cn(
+            `bg-[url(/map.png)] bg-cover absolute w-full h-full `,
+            GetClassIcon(data.type)
+          )}
+        />
+        {/* <img className="absolute w-full drop-shadow-md drop-shadow-black/50 z-0 " src="/ClassIcons/destroyer.png" /> */}
         <img className="absolute w-full z-10" src={data.images.large} />
       </div>
-
       {/* Display text information about the ship */}
-      {/* <div className="flex flex-col gap-1 text-center w-full h-full">
-        <h1 className="text-2xl font-bold">{data.name}</h1>
-        <p>Price: {data.price_gold}</p>
-        <div>
-          <img src={GetNationIcon(data.nation)} alt="" />
-        </div> */}
-
-      {/* Small section showing the tier and type */}
-      {/* <div className="flex justify-between place-items-center w-3/4 place-self-center">
+      <div className="flex flex-col w-full h-full place-items-center bg-[linear-gradient(90deg,rgba(255,255,255,0)_0%,rgba(0,0,0,0.6)_15%,rgba(0,0,0,0.6)_85%,rgba(255,255,255,0)_100%)]  ">
+        <div className="flex flex-row gap-1 place-items-center text-center justify-center line-clamp-1 w-full h-full">
+          <img
+            className="w-8 aspect-video"
+            src={GetNationIcon(data.nation)}
+            alt=""
+          />
+          <h1 className="text-2xl font-bold">{data.name}</h1>
+        </div>
+        <div className="flex font-medium justify-evenly w-full">
+          <p>
+            Price:
+            <span
+              className={
+                data.price_gold == 0 ? "text-green-500" : "text-amber-500"
+              }>
+              {" "}
+              {data.price_gold == 0 ? "Free" : data.price_gold}{" "}
+            </span>
+          </p>
           <p>Tier: {data.tier}</p>
         </div>
-      </div> */}
-    </div>
+      </div>
+    </a>
   );
 }
 
