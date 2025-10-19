@@ -22,19 +22,33 @@ function RouteComponent() {
 
   return (
     <>
-      <div className="flex p-2 gap-2">
+      <div className="flex flex-col md:flex-row p-2 gap-2">
         {/* Left side */}
-        <div className="flex-1 flex-col w-1/2 rounded-2xl p-3 outline">
-          <img className="w-full" src={data?.images.large} alt="" />
+        <div className="flex-1 md:w-1/2 rounded-2xl p-3 outline">
+          <img className="w-full rounded-xl" src={data?.images.large} alt="" />
           <div className="flex flex-row justify-between px-6 py-2">
-            <h1 className="font-test font-bold ">{data?.name}</h1>
-            <p>{data?.nation}</p>
-            <p>{data?.tier}</p>
-            <p>{data?.price_gold}</p>
+            <h1 className="font-black-ops font-bold text-3xl h-min my-auto">
+              {data?.name}
+            </h1>
+            <div className="flex flex-row gap-2 text-center">
+              <div className="min-w-14">
+                <h1>Nation:</h1>
+                <p>{capitalizeFirstLetter(data?.nation)}</p>
+              </div>
+              <div className="min-w-14">
+                <h1>Tier:</h1>
+                <p>{data?.tier}</p>
+              </div>
+              <div className="min-w-14">
+                <h1>Price:</h1>
+                <p>{data?.price_gold}</p>
+              </div>
+            </div>
           </div>
         </div>
+
         {/* Right side */}
-        <div className="flex-1 w-1/2 rounded-2xl p-3 outline">
+        <div className="flex-1 md:w-1/2 rounded-2xl p-3 outline">
           <h1 className="font-bold text-[1.25rem]">Description</h1>
           <p>{data?.description}</p>
           <ul className="overflow-hidden">
@@ -94,4 +108,8 @@ async function fetchSpecificShipData() {
   } catch (err) {
     console.error(err);
   }
+}
+
+function capitalizeFirstLetter(val: any) {
+  return String(val).charAt(0).toUpperCase() + String(val).slice(1);
 }

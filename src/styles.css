@@ -5,7 +5,11 @@
 
 @theme {
   --font-oswald: "Oswald", sans-serif;
-  --font-test: "Black Ops One", sans-serif;
+  --font-black-ops: "Black Ops One", sans-serif;
+}
+
+.black-ops {
+  font-family: var(--font-black-ops);
 }
 
 progress::-webkit-progress-bar {
