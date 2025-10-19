@@ -7,3 +7,13 @@
   --font-oswald: "Oswald", sans-serif;
   --font-test: "Black Ops One", sans-serif;
 }
+
+progress::-webkit-progress-bar {
+  background-color: #e5e7eb;
+  border-radius: 9999px;
+}
+
+progress::-webkit-progress-value {
+  background: linear-gradient(to right, #2f855a, #38a169);
+  border-radius: 9999px;
+}

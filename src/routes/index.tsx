@@ -105,7 +105,8 @@ export function ShipCard({ data }: { data: shipData }) {
       className={cn(
         "flex flex-col w-84 bg-blue-400 overflow-clip h-min gap-1 rounded-xl hover:-translate-y-2 duration-200",
         colour.find((el) => el.nation === data.nation)?.bg
-      )}>
+      )}
+    >
       {/* Show the ship's image */}
       <div className="rounded-4xl relative w-full bg-cover bg-center aspect-video">
         <div
@@ -133,7 +134,8 @@ export function ShipCard({ data }: { data: shipData }) {
             <span
               className={
                 data.price_gold == 0 ? "text-green-500" : "text-amber-500"
-              }>
+              }
+            >
               {" "}
               {data.price_gold == 0 ? "Free" : data.price_gold}{" "}
             </span>

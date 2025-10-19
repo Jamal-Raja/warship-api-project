@@ -22,9 +22,9 @@ function RouteComponent() {
 
   return (
     <>
-      <div className="flex rounded-4xl p-2 gap-1">
+      <div className="flex p-2 gap-2">
         {/* Left side */}
-        <div className="flex-1 flex-col w-1/2 outline">
+        <div className="flex-1 flex-col w-1/2 rounded-2xl p-3 outline">
           <img className="w-full" src={data?.images.large} alt="" />
           <div className="flex flex-row justify-between px-6 py-2">
             <h1 className="font-test font-bold ">{data?.name}</h1>
@@ -34,9 +34,10 @@ function RouteComponent() {
           </div>
         </div>
         {/* Right side */}
-        <div className="flex-1 w-1/2 outline">
-            <p>{data?.description}</p>
-          <ul className="outline">
+        <div className="flex-1 w-1/2 rounded-2xl p-3 outline">
+          <h1 className="font-bold text-[1.25rem]">Description</h1>
+          <p>{data?.description}</p>
+          <ul className="overflow-hidden">
             <ShipParam
               name="Mobility"
               value={data?.default_profile.mobility.total!}
@@ -66,10 +67,15 @@ function RouteComponent() {
 
 function ShipParam({ value, name }: { value: number; name: string }) {
   return (
-    <div className="relative w-full h-8 items-center flex">
-      <progress value={value} max={100} className="absolute w-full h-full" />
-      <li className="absolute">
-        {name}:{value}
+    <div className="relative w-full h-8 items-center flex my-1 justify-start rounded-full overflow-hidden">
+      <progress
+        value={value}
+        max={100}
+        className="absolute w-full h-[80%] border-2 rounded-full"
+      />
+      <li className="absolute text-white px-2.5">
+        <span className="text-zinc-100">{name}</span>:{" "}
+        <span className="font-medium text-zinc-50">{value}</span>
       </li>
     </div>
   );
