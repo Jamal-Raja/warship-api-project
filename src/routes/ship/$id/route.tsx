@@ -22,23 +22,41 @@ function RouteComponent() {
 
   return (
     <>
-      <div>Hello "/ship/{id}"!</div>
-      <div className="flex ">
+      <div className="flex rounded-4xl p-2 gap-1">
         {/* Left side */}
-        <div className="flex-1 w-1/2 outline">
-          <img src={data?.images.large} alt="" />
-          <p>{data?.name}</p>
+        <div className="flex-1 flex-col w-1/2 outline">
+          <img className="w-full" src={data?.images.large} alt="" />
+          <div className="flex flex-row justify-between px-6 py-2">
+            <h1 className="font-test font-bold ">{data?.name}</h1>
+            <p>{data?.nation}</p>
+            <p>{data?.tier}</p>
+            <p>{data?.price_gold}</p>
+          </div>
         </div>
         {/* Right side */}
         <div className="flex-1 w-1/2 outline">
-          <ul className="outline ">
-            <ShipParam value={data?.default_profile.mobility.total!} />
-
-            {/*             
-            <li>{data?.default_profile.armour.total}</li>
-            <li>{data?.default_profile.weaponry.artillery}</li>
-            <li>{data?.default_profile.weaponry.anti_aircraft}</li>
-            <li>{data?.default_profile.concealment.total}</li> */}
+            <p>{data?.description}</p>
+          <ul className="outline">
+            <ShipParam
+              name="Mobility"
+              value={data?.default_profile.mobility.total!}
+            />
+            <ShipParam
+              name="Armour"
+              value={data?.default_profile.armour.total!}
+            />
+            <ShipParam
+              name="Concealment"
+              value={data?.default_profile.concealment.total!}
+            />
+            <ShipParam
+              name="Artillery"
+              value={data?.default_profile.weaponry.artillery!}
+            />
+            <ShipParam
+              name="Anti aircraft"
+              value={data?.default_profile.weaponry.anti_aircraft!}
+            />
           </ul>
         </div>
       </div>
@@ -46,11 +64,13 @@ function RouteComponent() {
   );
 }
 
-function ShipParam({ value }: { value: number }) {
+function ShipParam({ value, name }: { value: number; name: string }) {
   return (
     <div className="relative w-full h-8 items-center flex">
       <progress value={value} max={100} className="absolute w-full h-full" />
-      <li className="absolute">{value}</li>
+      <li className="absolute">
+        {name}:{value}
+      </li>
     </div>
   );
 }

@@ -1,3 +1,5 @@
+/** @format */
+
 // DATA TYPE FOR SHIP TYPE (E.G Destroyer, cruiser, battleship, airc-arrier)
 export type shipClass =
   | "Cruiser"
@@ -38,6 +40,7 @@ export interface shipData {
 // This describes what each "ship" looks like in JSON data.
 export interface SpecificShipData extends shipData {
   is_premium: boolean;
+  description: string;
   default_profile: {
     mobility: {
       total: number;
