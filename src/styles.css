@@ -4,12 +4,38 @@
 @import "tailwindcss";
 
 @theme {
-  --font-oswald: "Oswald", sans-serif;
-  --font-black-ops: "Black Ops One", sans-serif;
-}
+  /* ==========================================
+     Typography
+     ========================================== */
+  --font-heading: "Oswald", sans-serif;
+  --font-display: "Black Ops One", sans-serif;
 
-.black-ops {
-  font-family: var(--font-black-ops);
+  /* ==========================================
+      World of Warships Colour Pallete
+     ========================================== */
+  /* ---------- Brand Colours ---------- */
+  --color-brand: #a4c2a5; /* Cambridge Blue – main brand colour */
+  --color-brand-alt: #c2a4c1; /* Lilac – secondary accent */
+  --color-brand-dark: #566246; /* Ebony – used for nav bars, footers */
+
+  /* ---------- Surface & Base Colours ---------- */
+  --color-surface-light: #f5f7f5; /* Light background */
+  --color-surface-dark: #303730; /* Dark mode background / footer */
+  --color-text-base: #2e2e2e; /* Primary text */
+  --color-text-inverse: #f2f2f2; /* Text on dark backgrounds */
+  --color-border: #b2b8b3; /* Dividers, subtle borders */
+
+  /* ---------- Accent & Interactive ---------- */
+  --color-action: #d1a054; /* CTA / button background */
+  --color-action-hover: #b5894c; /* Button hover / active */
+  --color-link: #4a6572; /* Hyperlinks */
+  --color-success: #7cb48a; /* Success / confirmation */
+  --color-error: #b45c4e; /* Error / alert */
+
+  /* ---------- Utility / Thematic ---------- */
+  --color-ui-border: #74847c; /* Subtle outlines / card edges */
+  --color-ui-muted: #aabcc0; /* Muted neutral (sidebars / panels) */
+  --color-ui-neutral: #cbbfad; /* Warm neutral (sections / cards) */
 }
 
 progress::-webkit-progress-bar {

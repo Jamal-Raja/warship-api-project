@@ -27,7 +27,7 @@ function RouteComponent() {
         <div className="flex-1 md:w-1/2 rounded-2xl p-3 outline">
           <img className="w-full rounded-xl" src={data?.images.large} alt="" />
           <div className="flex flex-row justify-between px-6 py-2">
-            <h1 className="font-black-ops font-bold text-3xl h-min my-auto">
+            <h1 className="font-display font-bold text-3xl h-min my-auto">
               {data?.name}
             </h1>
             <div className="flex flex-row gap-2 text-center">
