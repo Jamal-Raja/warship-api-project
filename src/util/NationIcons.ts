@@ -34,15 +34,15 @@ export function GetNationIcon(nClass: nationClass) {
 export function GetClassIcon(sClass: shipClass) {
   switch (sClass) {
     case "Cruiser":
-      return "mask-cover mask-[url(ClassIcons/cruiser.png)]";
+      return "mask-cover mask-[url(/ClassIcons/cruiser.png)] mask-center scale-105";
     case "Destroyer":
-      return "mask-cover mask-[url(ClassIcons/destroyer.png)]";
+      return "mask-cover mask-[url(/ClassIcons/destroyer.png)] mask-center scale-105";
     case "Battleship":
-      return "mask-cover mask-[url(ClassIcons/battleship.png)]";
+      return "mask-cover mask-[url(/ClassIcons/battleship.png)] mask-center scale-105";
     case "AirCarrier":
-      return "mask-cover mask-[url(ClassIcons/aircraft_carrier.png)]";
+      return "mask-cover mask-[url(/ClassIcons/aircraft_carrier.png)] mask-center scale-105";
     case "Submarine":
-      return "mask-cover mask-[url(ClassIcons/submarine.png)]";
+      return "mask-cover mask-[url(/ClassIcons/submarine.png)] mask-center scale-105";
   }
 }
 

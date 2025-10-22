@@ -1,8 +1,9 @@
 /** @format */
 
+import { ShipImage } from "@/components/ShipImage";
 import { cn } from "@/util/ClassCombine";
 import { GetClassIcon } from "@/util/NationIcons";
-import type { SpecificShipData } from "@/util/types";
+import type { shipClass, SpecificShipData } from "@/util/types";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 
@@ -16,7 +17,7 @@ function RouteComponent() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const ssData = await fetchSpecificShipData();
+      const ssData = await fetchSpecificShipData(id);
       setData(ssData);
     };
     fetchData();
@@ -27,79 +28,69 @@ function RouteComponent() {
   }
 
   return (
-    <>
-      <div className="flex flex-col md:flex-row p-2 gap-2 bg-red-300 h-dvh">
-        {/* Left side */}
-        <div
-          className={`flex-1 md:w-1/2 place-content-center rounded-2xl p-3 outline bg-brand h1/2 md:h-2/3 my-auto`}
-        >
-          <div className="w-full bg-cover bg-center flex h-64 outline relative">
-            <div
-              className={cn(
-                `bg-[url(/map.png)] bg-cover absolute w-full h-full `,
-                "mask-contain mask-[url(public/ClassIcons/cruiser.png)]"
-              )}
-            />
-            <img
-              className="w-full absolute rounded-xl"
-              src={data.images.large}
-              alt=""
-            />
-          </div>
-          <div className="flex flex-row sm:justify-between px-6 py-2 flex-wrap justify-center">
-            <h1 className="font-display font-bold text-3xl h-min my-auto">
-              {data.name}
-            </h1>
-            <div className="flex flex-row gap-2 text-center">
-              <div className="min-w-14">
-                <h1>Nation:</h1>
-                <p>{capitalizeFirstLetter(data.nation)}</p>
-              </div>
-              <div className="min-w-14">
-                <h1>Tier:</h1>
-                <p>{data.tier}</p>
-              </div>
-              <div className="min-w-14">
-                <h1>Price:</h1>
-                <p>{data.price_gold}</p>
-              </div>
+    <div className="flex flex-col h-min md:flex-row p-2 pt-16 gap-2">
+      {/* Left side */}
+      <div
+        className={`flex flex-col place-content-center rounded-2xl p-3 bg-brand md:w-1/2`}>
+        {/* ship image */}
+        <ShipImage
+          imgUrl={data.images.large}
+          type={data.type}
+          premium={data.is_premium}
+        />
+
+        <div className="flex flex-row sm:justify-between px-6 py-2 flex-wrap justify-center">
+          <h1 className="font-display font-bold text-3xl h-min my-auto">
+            {data.name}
+          </h1>
+          <div className="flex flex-row gap-2 text-center">
+            <div className="min-w-14">
+              <h1>Nation:</h1>
+              <p>{capitalizeFirstLetter(data.nation)}</p>
+            </div>
+            <div className="min-w-14">
+              <h1>Tier:</h1>
+              <p>{data.tier}</p>
+            </div>
+            <div className="min-w-14">
+              <h1>Price:</h1>
+              <p>{data.price_gold}</p>
             </div>
           </div>
         </div>
-
-        {/* Right side */}
-        <div className="flex-1 flex flex-col gap-4 md:w-1/2 place-content-center rounded-2xl p-3 outline border-border bg-brand md:h-2/3 my-auto">
-          <div className=" h-min flex flex-col outline rounded-2xl p-3 bg-surface-light">
-            <h1 className="font-bold text-[1.25rem]">Description</h1>
-            <p>{data.description}</p>
-          </div>
-          <ul className=" h-min flex flex-col">
-            <ShipParam
-              name="Mobility"
-              value={data.default_profile.mobility.total!}
-            />
-            <ShipParam
-              name="Armour"
-              value={data.default_profile.armour.total!}
-            />
-            <ShipParam
-              name="Concealment"
-              value={data.default_profile.concealment.total!}
-            />
-            <ShipParam
-              name="Artillery"
-              value={data.default_profile.weaponry.artillery!}
-            />
-            <ShipParam
-              name="Anti aircraft"
-              value={data.default_profile.weaponry.anti_aircraft!}
-            />
-          </ul>
-        </div>
       </div>
-    </>
+
+      {/* Right side */}
+      <div className="flex flex-col gap-4 md:w-1/2 place-content-center rounded-2xl p-3 border-border bg-brand">
+        <div className=" h-min flex flex-col  rounded-2xl p-3 bg-surface-light">
+          <h1 className="font-bold text-[1.25rem]">Description</h1>
+          <p>{data.description}</p>
+        </div>
+        <ul className=" h-min flex flex-col">
+          <ShipParam
+            name="Mobility"
+            value={data.default_profile.mobility.total!}
+          />
+          <ShipParam name="Armour" value={data.default_profile.armour.total!} />
+          <ShipParam
+            name="Concealment"
+            value={data.default_profile.concealment.total!}
+          />
+          <ShipParam
+            name="Artillery"
+            value={data.default_profile.weaponry.artillery!}
+          />
+          <ShipParam
+            name="Anti aircraft"
+            value={data.default_profile.weaponry.anti_aircraft!}
+          />
+        </ul>
+      </div>
+    </div>
   );
 }
+
+
 
 function ShipParam({ value, name }: { value: number; name: string }) {
   return (
@@ -116,10 +107,18 @@ function ShipParam({ value, name }: { value: number; name: string }) {
     </div>
   );
 }
-
-async function fetchSpecificShipData() {
+async function fetchSpecificShipData(id: string) {
   try {
-    const response = await fetch("../../../../testDataSpecific.json"); //replace with api call
+    const url = "https://api.worldofwarships.eu/wows/encyclopedia/ships/?";
+    // ?application_id=aca8807c90565b1c9525cad7da601042&ship_id=3248404240
+    const params = new URLSearchParams({
+      application_id: import.meta.env.VITE_WOWS_API_KEY,
+      ship_id: id,
+    });
+    // console.log(params);
+
+    const response = await fetch(url + params);
+    // const response = await fetch("../../../../testDataSpecific.json"); //replace with api call
     if (!response.ok) {
       throw new Error("Could not fetch resource");
     }
