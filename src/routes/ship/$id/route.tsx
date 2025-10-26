@@ -1,9 +1,7 @@
 /** @format */
 
 import { ShipImage } from "@/components/ShipImage";
-import { cn } from "@/util/ClassCombine";
-import { GetClassIcon } from "@/util/NationIcons";
-import type { shipClass, SpecificShipData } from "@/util/types";
+import type { SpecificShipData } from "@/util/types";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 

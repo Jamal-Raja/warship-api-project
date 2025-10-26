@@ -29,7 +29,7 @@ function NavBar({ children, className, ...props }: NavBarProps) {
     <div
       {...props}
       className={cn(
-        `bg-fuchsia-400/70 rounded-2xl z-50 py-1 min-h-4 px-20 duration-300 flex justify-between items-center fixed top-1 left-0 right-0 max-w-11/12 mx-auto ${
+        `bg-fuchsia-400/70 rounded-2xl z-60 py-1 min-h-4 px-20 duration-300 flex justify-between items-center fixed top-1 left-0 right-0 max-w-11/12 mx-auto ${
           visible ? "translate-y-0" : "-translate-y-[120%]"
         }`,
         className

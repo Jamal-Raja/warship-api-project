@@ -1,5 +1,6 @@
 /** @format */
 
+export const WOWS_BASE_URL = "https://api.worldofwarships.eu/wows"
 // DATA TYPE FOR SHIP TYPE (E.G Destroyer, cruiser, battleship, airc-arrier)
 export type shipClass =
   | "Cruiser"
@@ -56,6 +57,8 @@ export interface SpecificShipData extends shipData {
     weaponry: {
       artillery: number;
       anti_aircraft: number;
+      aircraft:number;
+      torpedoes:number;
     };
   };
 }
